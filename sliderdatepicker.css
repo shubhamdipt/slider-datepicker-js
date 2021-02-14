@@ -1,0 +1,65 @@
+.sliderCalendar {
+    background-color: white;
+    box-shadow: rgb(220 220 220) 0px 4px 8px 0px;
+    padding: 10px;
+    position: absolute;
+    left: 250.453px;
+    top: 184px;
+    bottom: -5px;
+    width: 350px;
+    height: 180px;
+    margin-top: 10px;
+    display: flex;
+    border-radius: 20px;
+    font-size: 15px;
+    color: rgb(130, 130, 130);
+}
+.sliderdatepicker-sliderDiv {
+    overflow-y: auto;
+}
+.sliderdatepicker-date-div {
+    width: 30%;
+}
+.sliderdatepicker-month-div {
+    width: 40%;
+}
+.sliderdatepicker-year-div {
+    width: 30%;
+}
+.sliderdatepicker-highlight-box {
+    position: absolute;
+    top: 75px;
+    margin: 0 4px;
+    border-bottom: 2px solid #3353bb;
+    border-top: 2px solid #3353bb;
+    width: 73px;
+    height: 26px;
+}
+.sliderdatepicker-sliderDivChild {
+    text-align: center;
+    padding: 0px;
+    height: 22px;
+    font-weight: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+.sliderdatepicker-sliderDivChild.sliderdatepicker-active {
+    font-weight: 700;
+    color: rgb(39, 57, 114);
+    font-size: 18px;
+}
+
+/* Scroll bar properties */
+.sliderdatepicker-sliderDiv::-webkit-scrollbar {
+    width: 12px;
+}
+
+.sliderdatepicker-sliderDiv::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+
+.sliderdatepicker-sliderDiv::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
