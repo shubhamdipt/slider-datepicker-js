@@ -171,5 +171,6 @@ var sliderdatepickerPlugin =  function (options) {
       sliderObject.fill_calendar();
     });
   })
+}
 
 $.fn.sliderdatepicker = sliderdatepickerPlugin;
