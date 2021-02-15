@@ -20,18 +20,6 @@ var slidedatepicker_dates = {
   }
 };
 
-function sliderDatePickerDateTimeToFormat(day, month, year, language,format) {
-  month = slidedatepicker_dates[language]["months"].indexOf(month) + 1;
-  year = year.toString();
-  if (day < 10) {
-    day = "0" + day
-  }
-  if (month < 10) {
-    month = "0" + month
-  }
-  return format.replace("dd", day).replace("mm", month).replace("yyyy", year)
-}
-
 function SliderDatePickerPluginObject(element, options) {
   this.element = element;
   this.elem_position = element.position();
@@ -42,7 +30,6 @@ function SliderDatePickerPluginObject(element, options) {
   this.start_year = options.startYear === undefined ? 1950 : options.startYear;
   this.end_year = options.endYear === undefined ? this.today.getFullYear()+3 : options.startYear;
   this.months = slidedatepicker_dates[this.language].months;
-  this.displayCalendarSettings = options.showAlways === undefined ? "none" : "flex";
   this.dd_index = this.slidedatepicker_format.indexOf("dd");
   this.mm_index = this.slidedatepicker_format.indexOf("mm");
   this.yyyy_index = this.slidedatepicker_format.indexOf("yyyy");
@@ -142,7 +129,7 @@ function SliderDatePickerPluginObject(element, options) {
   }
   
   // fill calendar
-  this.fill_calendar = function () {
+  this.create_calendar = function (display) {
     this._fill_date_div();
     this._fill_month_div();
     this._fill_year_div();
@@ -152,23 +139,32 @@ function SliderDatePickerPluginObject(element, options) {
     this.calendar.css({
       "left": this.elem_position.left, 
       "top": this.elem_position.top + this.element.height(), 
-      "display": this.displayCalendarSettings
+      "display": display
     });
     this.element.after(this.calendar);
     this.addScrollEventListeners();
     this.moveToCurrentDate();
   }
   
+  // Destroy the calendar
+  this.destroy = function () {
+    this.calendar.remove();
+  }
+  
 }
 
 var sliderdatepickerPlugin =  function (options) {
-  options.showAlways = "flex";
   var selected_elements = $(this);
-  selected_elements.each(function (){
+  selected_elements.each(function () {
     var input_element = $(this);
-    input_element.get(0).addEventListener("click", function (){
-      var sliderObject = new SliderDatePickerPluginObject($(this), options);
-      sliderObject.fill_calendar();
+    input_element.get(0).addEventListener("click", function () {
+      var slider_calendar = $(this).siblings(".sliderCalendar");
+      if (slider_calendar.length) {
+        slider_calendar.remove();
+      } else {
+        var sliderObject = new SliderDatePickerPluginObject($(this), options);
+        sliderObject.create_calendar();
+      }
     });
   })
 }
