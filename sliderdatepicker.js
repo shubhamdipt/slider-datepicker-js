@@ -80,16 +80,13 @@ function SliderDatePickerPluginObject(element, options) {
   
   // Move to current date
   this.moveToCurrentDate = function () {
-    this.date_div.animate({scrollTop: (22 * (sliderdatepicker_today.getDate()-1))}, 1000);
-    this.month_div.animate({scrollTop: (22 * sliderdatepicker_today.getMonth())}, 1000);
-    this.year_div.animate({scrollTop: (22 * (sliderdatepicker_today.getFullYear() - this.start_year))}, 1000);
+    this.date_div.animate({scrollTop: (22 * (sliderdatepicker_today.getDate()-1))}, 600);
+    this.month_div.animate({scrollTop: (22 * sliderdatepicker_today.getMonth())}, 600);
+    this.year_div.animate({scrollTop: (22 * (sliderdatepicker_today.getFullYear() - this.start_year))}, 600);
   }
   
   // Update the input field
   this.sliderdatepicker_update_input = function (value) {
-    // var day = this.date_div.find('.sliderdatepicker-sliderDivChild.sliderdatepicker-active').text();
-    // var month = this.month_div.find('.sliderdatepicker-sliderDivChild.sliderdatepicker-active').text();
-    // var year = this.year_div.find('.sliderdatepicker-sliderDivChild.sliderdatepicker-active').text();
     if (value) {
       var date_string =  this.element.val() ? this.element.val() : this.slidedatepicker_format;
       if (isNaN(value)) {
@@ -129,7 +126,7 @@ function SliderDatePickerPluginObject(element, options) {
   }
   
   // fill calendar
-  this.create_calendar = function (display) {
+  this.create_calendar = function () {
     this._fill_date_div();
     this._fill_month_div();
     this._fill_year_div();
@@ -139,7 +136,6 @@ function SliderDatePickerPluginObject(element, options) {
     this.calendar.css({
       "left": this.elem_position.left, 
       "top": this.elem_position.top + this.element.height(), 
-      "display": display
     });
     this.element.after(this.calendar);
     this.addScrollEventListeners();
