@@ -53,7 +53,11 @@ function SliderDatePickerPluginObject(element, options) {
   this._fill_date_div = function () {
     for (var i = -2; i < 36; i++) {
       if (i > 0 && i < 32) {
-        this.date_div.append("<div class='sliderdatepicker-sliderDivChild'>" + i + "</div>")
+        if (i === 1) {
+          this.date_div.append("<div class='sliderdatepicker-sliderDivChild sliderdatepicker-active'>" + i + "</div>")
+        } else {
+          this.date_div.append("<div class='sliderdatepicker-sliderDivChild'>" + i + "</div>")
+        }
       } else {
         this.date_div.append("<div class='sliderdatepicker-sliderDivChild'></div>")
       }
@@ -62,7 +66,11 @@ function SliderDatePickerPluginObject(element, options) {
   this._fill_month_div = function () {
     for (var j = -3; j < 16; j++) {
       if (j >= 0 && j < 12) {
-        this.month_div.append("<div class='sliderdatepicker-sliderDivChild'>" + this.months[j] + "</div>")
+        if (j === 0) {
+          this.month_div.append("<div class='sliderdatepicker-sliderDivChild sliderdatepicker-active'>" + this.months[j] + "</div>")
+        } else {
+          this.month_div.append("<div class='sliderdatepicker-sliderDivChild'>" + this.months[j] + "</div>")
+        }
       } else {
         this.month_div.append("<div class='sliderdatepicker-sliderDivChild'></div>")
       }
@@ -71,7 +79,11 @@ function SliderDatePickerPluginObject(element, options) {
   this._fill_year_div = function () {
     for (var k = this.start_year-3; k <= this.end_year+4; k++) {
       if (k >= this.start_year && k <= this.end_year) {
-        this.year_div.append("<div class='sliderdatepicker-sliderDivChild'>" + k + "</div>")
+        if (k === this.start_year) {
+          this.year_div.append("<div class='sliderdatepicker-sliderDivChild sliderdatepicker-active'>" + k + "</div>")
+        } else {
+          this.year_div.append("<div class='sliderdatepicker-sliderDivChild'>" + k + "</div>")
+        }
       } else {
         this.year_div.append("<div class='sliderdatepicker-sliderDivChild'></div>")
       }
@@ -80,9 +92,16 @@ function SliderDatePickerPluginObject(element, options) {
   
   // Move to current date
   this.moveToCurrentDate = function () {
-    this.date_div.animate({scrollTop: (22 * (sliderdatepicker_today.getDate()-1))}, 600);
-    this.month_div.animate({scrollTop: (22 * sliderdatepicker_today.getMonth())}, 600);
-    this.year_div.animate({scrollTop: (22 * (sliderdatepicker_today.getFullYear() - this.start_year))}, 600);
+    var input_val = this.element.val();
+    if (!input_val) {
+      this.date_div.animate({scrollTop: (22 * (sliderdatepicker_today.getDate()-1))}, 600);
+      this.month_div.animate({scrollTop: (22 * sliderdatepicker_today.getMonth())}, 600);
+      this.year_div.animate({scrollTop: (22 * (sliderdatepicker_today.getFullYear() - this.start_year))}, 600);
+    } else {
+      this.date_div.scrollTop(22 * (parseInt(input_val.slice(this.dd_index, this.dd_index + 2)) - 1));
+      this.month_div.scrollTop(22 * (parseInt(input_val.slice(this.mm_index, this.mm_index + 2)) -1));
+      this.year_div.scrollTop(22 * (parseInt(input_val.slice(this.yyyy_index, this.yyyy_index + 4)) - this.start_year));
+    }
   }
   
   // Update the input field
